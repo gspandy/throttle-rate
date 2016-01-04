@@ -1,5 +1,8 @@
 package com.weihui.common.throttle.strategy.bucket;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 import java.util.concurrent.TimeUnit;
 
 
@@ -34,5 +37,10 @@ public class FixedTokenBucketStrategy extends TokenBucketStrategy {
         tokens = bucketTokenCapacity;
         //下一次时间＝当前时间＋配置的时间间隔
         nextRefillTime = currentTime + refillInterval;
+    }
+
+    @Override
+    public String toString(){
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 }

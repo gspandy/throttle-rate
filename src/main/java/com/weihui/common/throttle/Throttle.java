@@ -2,6 +2,8 @@ package com.weihui.common.throttle;
 
 import com.weihui.common.throttle.strategy.ThrottleStrategy;
 import com.weihui.common.throttle.strategy.bucket.FixedTokenBucketStrategy;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 import java.util.concurrent.TimeUnit;
 
@@ -53,5 +55,10 @@ public class Throttle {
 
     public void setStrategy(ThrottleStrategy strategy) {
         this.strategy = strategy;
+    }
+
+    @Override
+    public String toString(){
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE );
     }
 }
