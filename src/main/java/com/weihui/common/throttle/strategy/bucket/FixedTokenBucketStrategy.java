@@ -15,7 +15,13 @@ import java.util.concurrent.TimeUnit;
  */
 public class FixedTokenBucketStrategy extends TokenBucketStrategy {
 
-	public FixedTokenBucketStrategy(long bucketTokenCapacity, long refillInterval, TimeUnit refillIntervalTimeUnit) {
+    //默认为秒
+    public FixedTokenBucketStrategy(long bucketTokenCapacity, long refillInterval) {
+        super(bucketTokenCapacity, refillInterval, TimeUnit.SECONDS);
+    }
+
+
+    public FixedTokenBucketStrategy(long bucketTokenCapacity, long refillInterval, TimeUnit refillIntervalTimeUnit) {
 		super(bucketTokenCapacity, refillInterval, refillIntervalTimeUnit);
 	}
 
@@ -24,8 +30,9 @@ public class FixedTokenBucketStrategy extends TokenBucketStrategy {
         // 如果当前时间超过下一次refill时间，则执行refill
         long currentTime = System.currentTimeMillis();
         if(currentTime < nextRefillTime) return;
-
+        //重新初始化tokens
         tokens = bucketTokenCapacity;
+        //下一次时间＝当前时间＋配置的时间间隔
         nextRefillTime = currentTime + refillInterval;
     }
 }

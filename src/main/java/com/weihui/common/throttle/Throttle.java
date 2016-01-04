@@ -1,6 +1,7 @@
 package com.weihui.common.throttle;
 
 import com.weihui.common.throttle.strategy.ThrottleStrategy;
+import com.weihui.common.throttle.strategy.bucket.FixedTokenBucketStrategy;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +20,13 @@ public class Throttle {
 
     public Throttle() {
     }
+
+    //默认采用FixedTokenBucketStrategy限流策略
+    public Throttle(long bucketTokenCapacity, long refillInterval){
+        strategy = new FixedTokenBucketStrategy(bucketTokenCapacity,refillInterval);
+    }
+
+
 
     public Throttle(ThrottleStrategy strategy) {
         this.strategy = strategy;

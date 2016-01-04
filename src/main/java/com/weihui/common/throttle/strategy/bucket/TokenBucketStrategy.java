@@ -30,17 +30,16 @@ public abstract class TokenBucketStrategy implements ThrottleStrategy {
     }
 
     public  boolean isThrottled() {
-        synchronized(this) {
-            return isThrottled(1);
-        }
+        //默认为使用一次
+        return isThrottled(1);
     }
 
     public boolean isThrottled(long n) {
         // preconditions
         Assert.isTrue(n >= 0, "参数必须大于0");
 
-        // check whether there exist at least n tokens in bucket
         synchronized(this){
+            //　检查本次请求是否允许
             if(getCurrentTokenCount() < n) return true;
             tokens -= n;
         }
@@ -53,6 +52,7 @@ public abstract class TokenBucketStrategy implements ThrottleStrategy {
     }
 
     public long getCurrentTokenCount() {
+        //获取当前容量
         synchronized(this) {
             updateTokens();
             return tokens;
